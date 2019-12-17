@@ -13,7 +13,13 @@ class ClientMigration extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('client',function(Blueprint $table){
+            $table->bigIncrements('id');
+            $table->string('nama');
+            $table->string('alamat');
+            $table->string('hp');
+            $table->string('foto');
+        });
     }
 
     /**
@@ -23,6 +29,6 @@ class ClientMigration extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('client');
     }
 }

@@ -25,7 +25,7 @@ class MobilMigration extends Migration
             $table->integer('harga_sewa_car');
             $table->string('foto_car');
             $table->timestamps();
-        })
+        });
     }
 
     /**

@@ -21,6 +21,7 @@ class AdminMigration extends Migration
             $table->string('alamat');
             $table->string('hp');
             $table->string('foto');
+             $table->timestamps();
         });
     }
 

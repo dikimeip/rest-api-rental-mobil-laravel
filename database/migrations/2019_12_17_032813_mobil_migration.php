@@ -13,7 +13,19 @@ class MobilMigration extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('car',function(Blueprint $table){
+            $table->bigIncrements('id');
+            $table->string('nama_car');
+            $table->string('nopol_car');
+            $table->string('jenis_car');
+            $table->text('desk_car');
+            $table->string('tahun_car');
+            $table->date('tahun_masuk_car');
+            $table->string('status_car');
+            $table->integer('harga_sewa_car');
+            $table->string('foto_car');
+            $table->timestamps();
+        })
     }
 
     /**
@@ -23,6 +35,6 @@ class MobilMigration extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('car');
     }
 }

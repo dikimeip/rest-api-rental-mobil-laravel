@@ -46,7 +46,39 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $foto = $request->file('foto');
+        if ($foto == '') {
+            return response()->json([
+                'status' => 0,
+                'data' => 'Image Null'
+            ],404);
+        } else {
+            $foto = $request->file('foto');
+            $org = $foto->getClientOriginalName();
+            $path = 'image';
+            $foto->move($path,$org);
+
+            $AdminModel = new AdminModel;
+            $AdminModel->nama = $request->get('nama');
+            $AdminModel->username = $request->get('username');
+            $AdminModel->password = $request->get('password');
+            $AdminModel->alamat = $request->get('alamat');
+            $AdminModel->hp = $request->get('hp');
+            $AdminModel->foto = $org;
+            $AdminModel->save();
+
+            if ($AdminModel) {
+                return response()->json([
+                    'status' => 1,
+                    'data' => 'Success Upload Data'
+                ],201);
+            } else {
+                 return response()->json([
+                    'status' => 0,
+                    'data' => 'Failed Upload Data'
+                ],201);
+            }
+        }
     }
 
     /**

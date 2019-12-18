@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\ClientModel;
 
 class ClientController extends Controller
 {
@@ -14,7 +14,18 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $data = ClientModel::all();
+        if ($data) {
+            return response()->json([
+                'status' => 1,
+                'data' => $data
+            ],201);
+        } else {
+             return response()->json([
+                'status' => 0,
+                'data' => 'not found'
+            ],404);
+        }
     }
 
     /**

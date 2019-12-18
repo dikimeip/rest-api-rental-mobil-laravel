@@ -176,9 +176,27 @@ class ClientController extends Controller
      */
     public function destroy(Request $request)
     {
-        // $id = $request->get('id');
-        // if ($id ) {
-        //     # code...
-        // }
+        $id = $request->get('id');
+        $ClientModel = ClientModel::find($id);
+        if ($id == "" || $ClientModel == "" ) {
+            return response()->json([
+                'status' => 0,
+                'data' => 'Id No Found'
+            ],404);
+        } else {
+            $ClientModel = ClientModel::find($id);
+            $ClientModel->delete();
+            if ($ClientModel) {
+                 return response()->json([
+                    'status' => 1,
+                    'data' => 'Data Delete'
+                ],404);
+            } else {
+                 return response()->json([
+                    'status' => 0,
+                    'data' => 'Data Failed Delete'
+                ],404);
+            }
+        }
     }
 }

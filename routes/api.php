@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/client','ClientController@index');
 Route::post('/client','ClientController@store');
+Route::post('/client/edit','ClientController@update');

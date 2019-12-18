@@ -100,7 +100,7 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -110,9 +110,53 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $foto = $request->file('foto');
+        $id = $request->get('id');
+        if ($foto == "") {
+            $ClientModel = ClientModel::find($id);
+            $ClientModel->nama = $request->get('nama');
+            $ClientModel->alamat = $request->get('alamat');
+            $ClientModel->hp = $request->get('hp');
+            $ClientModel->save();
+
+            if ($ClientModel) {
+                 return response()->json([
+                    'status' => 1,
+                    'data' => 'Success Update'
+                ],404);
+            } else {
+                 return response()->json([
+                    'status' => 0,
+                    'data' => 'Failed Update'
+                ],404);
+            }
+        } else {
+            $foto = $request->file('foto');
+            $org = $foto->getClientOriginalName();
+            $path = 'image';
+            $foto->move($path,$org);
+
+            $ClientModel = ClientModel::find($id);
+            $ClientModel->nama = $request->get('nama');
+            $ClientModel->alamat = $request->get('alamat');
+            $ClientModel->hp = $request->get('hp');
+            $ClientModel->foto = $org;
+            $ClientModel->save();
+
+            if ($ClientModel) {
+                 return response()->json([
+                    'status' => 1,
+                    'data' => 'Success Update'
+                ],404);
+            } else {
+                 return response()->json([
+                    'status' => 0,
+                    'data' => 'Failed Update'
+                ],404);
+            }
+        }
     }
 
     /**

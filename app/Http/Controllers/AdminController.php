@@ -14,7 +14,18 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $data = AdminModel::all();
+        if ($data) {
+            return response()->json([
+                'status' => 1,
+                'data' => $data
+            ],201);
+        } else {
+             return response()->json([
+                'status' => 0,
+                'data' => 'Data Not found'
+            ],201);
+        }
     }
 
     /**

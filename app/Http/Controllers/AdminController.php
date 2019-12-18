@@ -177,8 +177,29 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->get('id');
+        $cari = AdminModel::find($id);
+        if ($id == "" || $cari == "") {
+            return response()->json([
+                'status'=>0,
+                'data' => 'Data Not Found'
+            ],404);
+        } else {
+             $cari = AdminModel::find($id);
+             $cari->delete();
+             if ($cari) {
+                 return response()->json([
+                    'status'=>1,
+                    'data' => 'Success Delete Data'
+                ],404);
+             } else {
+                return response()->json([
+                    'status'=>0,
+                    'data' => 'Delete Failed'
+                ],404);
+            }
+        }
     }
 }

@@ -35,7 +35,8 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        
+
     }
 
     /**
@@ -46,7 +47,38 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $foto = $request->file('foto');
+        if ($foto == "") {
+            return response()->json([
+                'status' => 0,
+                'data' => 'image found'
+            ],404);
+        } else {
+            $foto = $request->file('foto');
+            $org = $foto->getClientOriginalName();
+            $path = 'image';
+            $foto->move($path,$org);
+
+            $ClientModel = new ClientModel;
+            $ClientModel->nama = $request->get('nama');
+            $ClientModel->alamat = $request->get('alamat');
+            $ClientModel->hp = $request->get('hp');
+            $ClientModel->foto = $org;
+            $ClientModel->save();
+
+            if ($ClientModel) {
+                 return response()->json([
+                    'status' => 1,
+                    'data' => 'Success Upload'
+                ],404);
+            } else {
+                 return response()->json([
+                    'status' => 0,
+                    'data' => 'Failed Upload'
+                ],404);
+            }
+        }
+        
     }
 
     /**

@@ -23,5 +23,7 @@ Route::post('/client/edit','ClientController@update');
 Route::post('/client/delete','ClientController@destroy');
 Route::get('/admin','AdminController@index');
 Route::post('/admin','AdminController@store');
+Route::post('/admin/edit','AdminController@update');
+
 
 

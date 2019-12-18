@@ -100,7 +100,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -110,9 +110,65 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->get('id');
+        $cek = AdminModel::find($id);
+        if ($id == "" || $cek == "") {
+            return response()->json([
+                'status' => 0,
+                'data' => 'Id Not Found'
+            ],404);
+        } else {
+           $foto = $request->file('foto');
+           if ($foto == "") {
+                $AdminModel = AdminModel::find($id);
+                $AdminModel->nama = $request->get('nama');
+                $AdminModel->username = $request->get('username');
+                $AdminModel->password = $request->get('password');
+                $AdminModel->alamat = $request->get('alamat');
+                $AdminModel->hp = $request->get('hp');
+                $AdminModel->save();
+
+                if ($AdminModel) {
+                    return response()->json([
+                        'status' => 1,
+                        'data' => 'Success Upload Data'
+                    ],201);
+                } else {
+                     return response()->json([
+                        'status' => 0,
+                        'data' => 'Failed Upload Data'
+                    ],201);
+                }
+           } else {
+                $foto = $request->file('foto');
+                $org = $foto->getClientOriginalName();
+                $path = 'image';
+                $foto->move($path,$org);
+
+                $AdminModel = AdminModel::find($id);
+                $AdminModel->nama = $request->get('nama');
+                $AdminModel->username = $request->get('username');
+                $AdminModel->password = $request->get('password');
+                $AdminModel->alamat = $request->get('alamat');
+                $AdminModel->hp = $request->get('hp');
+                $AdminModel->foto = $org;
+                $AdminModel->save();
+
+                if ($AdminModel) {
+                    return response()->json([
+                        'status' => 1,
+                        'data' => 'Success Upload Data'
+                    ],201);
+                } else {
+                     return response()->json([
+                        'status' => 0,
+                        'data' => 'Failed Upload Data'
+                    ],201);
+                }
+           }
+        }
     }
 
     /**

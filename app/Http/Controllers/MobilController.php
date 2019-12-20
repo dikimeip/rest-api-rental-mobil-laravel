@@ -14,7 +14,18 @@ class MobilController extends Controller
      */
     public function index()
     {
-        //
+        $data = CarModel::all();
+        if ($data) {
+            return response()->json([
+                'status' => 1,
+                'data' => $data
+            ],201);
+        } else {
+             return response()->json([
+                'status' => 0,
+                'data' => 'data not found'
+            ],201);
+        }
     }
 
     /**

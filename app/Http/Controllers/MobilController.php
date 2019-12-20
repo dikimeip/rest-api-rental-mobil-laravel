@@ -189,8 +189,20 @@ class MobilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->get('id');
+        $cari = CarModel::find($id);
+        if ($id == "" || $cari == "") {
+             return response()->json([
+                'status' => 0,
+                'data' => 'id null'
+            ],201);
+        } else {
+             return response()->json([
+                'status' => 1,
+                'data' => 'id ok'
+            ],201);
+        }
     }
 }

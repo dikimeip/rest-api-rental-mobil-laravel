@@ -28,6 +28,7 @@ Route::post('/admin/delete','AdminController@destroy');
 Route::get('/car','MobilController@index');
 Route::post('/car','MobilController@store');
 Route::post('/car/edit','MobilController@update');
+Route::post('/car/delete','MobilController@destroy');
 
 
 

@@ -171,12 +171,12 @@ class MobilController extends Controller
                 if ($CarModel) {
                      return response()->json([
                         'status' => 1,
-                        'data' => 'Upload ok'
+                        'data' => 'Update ok'
                     ],201);
                 } else {
                      return response()->json([
                         'status' => 0,
-                        'data' => 'Upload failed'
+                        'data' => 'Update failed'
                     ],404);
                 }
             }
@@ -199,10 +199,19 @@ class MobilController extends Controller
                 'data' => 'id null'
             ],201);
         } else {
-             return response()->json([
-                'status' => 1,
-                'data' => 'id ok'
-            ],201);
+            $CarModel = CarModel::find($id);
+            $CarModel->delete();
+            if ($CarModel) {
+                 return response()->json([
+                    'status' => 1,
+                    'data' => 'Delete ok'
+                ],201);
+            } else {
+                 return response()->json([
+                    'status' => 0,
+                    'data' => 'Delete failed'
+                ],404);
+            }
         }
     }
 }

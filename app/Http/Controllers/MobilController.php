@@ -46,7 +46,18 @@ class MobilController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $foto = $request->file('foto');
+        if ($foto == "") {
+            return response()->json([
+                'status' => 0,
+                'data' => 'Image failed'
+            ],404);
+        } else {
+             return response()->json([
+                'status' => 0,
+                'data' => 'Image'
+            ],404);
+        }
     }
 
     /**

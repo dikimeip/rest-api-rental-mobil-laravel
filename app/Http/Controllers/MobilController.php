@@ -53,10 +53,15 @@ class MobilController extends Controller
                 'data' => 'Image failed'
             ],404);
         } else {
+            $foto = $request->file('foto');
+            $org = $foto->getClientOriginalName();
+            $path = 'image';
+            $foto->move($path,$org);
+
              return response()->json([
-                'status' => 0,
-                'data' => 'Image'
-            ],404);
+                'status' => 1,
+                'data' => 'Image ok'
+            ],201);
         }
     }
 

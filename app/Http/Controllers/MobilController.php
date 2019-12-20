@@ -115,9 +115,21 @@ class MobilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->get('id');
+        $cari = CarModel::find($id);
+        if ($id == "" || $cari == "") {
+            return response()->json([
+                'status' => 0,
+                'data' => 'Kosong'
+            ],404);
+        } else {
+             return response()->json([
+                'status' => 1,
+                'data' => 'ada'
+            ],404);
+        }
     }
 
     /**

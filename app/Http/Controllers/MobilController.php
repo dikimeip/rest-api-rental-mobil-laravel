@@ -125,10 +125,61 @@ class MobilController extends Controller
                 'data' => 'Kosong'
             ],404);
         } else {
-             return response()->json([
-                'status' => 1,
-                'data' => 'ada'
-            ],404);
+             $foto = $request->file('foto');
+            if ($foto == "") {
+                $CarModel =CarModel::find($id);
+                $CarModel->nama_car = $request->get('nama');
+                $CarModel->nopol_car = $request->get('nopol');
+                $CarModel->jenis_car = $request->get('jenis');
+                $CarModel->desk_car = $request->get('desk');
+                $CarModel->tahun_car = $request->get('tahun');
+                $CarModel->tahun_masuk_car = $request->get('masuk');
+                $CarModel->status_car = $request->get('status');
+                $CarModel->harga_sewa_car = $request->get('harga');
+                $CarModel->save();
+
+                 if ($CarModel) {
+                     return response()->json([
+                        'status' => 1,
+                        'data' => 'Upload ok'
+                    ],201);
+                } else {
+                     return response()->json([
+                        'status' => 0,
+                        'data' => 'Upload failed'
+                    ],404);
+                }
+
+            } else {
+                $foto = $request->file('foto');
+                $org = $foto->getClientOriginalName();
+                $path = 'image';
+                $foto->move($path,$org);
+
+                $CarModel =CarModel::find($id);
+                $CarModel->nama_car = $request->get('nama');
+                $CarModel->nopol_car = $request->get('nopol');
+                $CarModel->jenis_car = $request->get('jenis');
+                $CarModel->desk_car = $request->get('desk');
+                $CarModel->tahun_car = $request->get('tahun');
+                $CarModel->tahun_masuk_car = $request->get('masuk');
+                $CarModel->status_car = $request->get('status');
+                $CarModel->harga_sewa_car = $request->get('harga');
+                $CarModel->foto_car = $org;
+                $CarModel->save();
+
+                if ($CarModel) {
+                     return response()->json([
+                        'status' => 1,
+                        'data' => 'Upload ok'
+                    ],201);
+                } else {
+                     return response()->json([
+                        'status' => 0,
+                        'data' => 'Upload failed'
+                    ],404);
+                }
+            }
         }
     }
 

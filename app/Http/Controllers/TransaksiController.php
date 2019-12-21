@@ -35,7 +35,7 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -46,7 +46,27 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $TransaksiModel = new TransaksiModel;
+        $TransaksiModel->car_id = $request->get('mobil');
+        $TransaksiModel->client_id = $request->get('user');
+        $TransaksiModel->tanggal_masuk_trans = $request->get('masuk');
+        $TransaksiModel->tanggal_keluar_trans = $request->get('keluar');
+        $TransaksiModel->ket_trans = $request->get('ket');
+        $TransaksiModel->total_trans = $request->get('total');
+        $TransaksiModel->jaminan_trans = $request->get('jaminan');
+        $TransaksiModel->save();
+
+        if ($TransaksiModel) {
+            return response()->json([
+                'status' => 1,
+                'data' => 'Success Input Data'
+            ],201);
+        } else {
+            return response()->json([
+                'status' => 0,
+                'data' => 'Failed Upload Data'
+            ],404);
+        }
     }
 
     /**

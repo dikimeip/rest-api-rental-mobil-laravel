@@ -31,6 +31,8 @@ Route::post('/car/edit','MobilController@update');
 Route::post('/car/delete','MobilController@destroy');
 Route::get('/trans','TransaksiController@index');
 Route::post('/trans','TransaksiController@store');
+Route::post('/trans/edit','TransaksiController@update');
+
 
 
 

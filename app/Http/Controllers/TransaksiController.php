@@ -98,9 +98,38 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->get('id');
+        $TransaksiModel = TransaksiModel::find($id);
+        if ($id == "" || $TransaksiModel == "") {
+            return response()->json([
+                'status' => 0,
+                'data' => 'Id not found'
+            ],404);
+        } else {
+            $TransaksiModel = TransaksiModel::find($id);
+            $TransaksiModel->car_id = $request->get('mobil');
+            $TransaksiModel->client_id = $request->get('user');
+            $TransaksiModel->tanggal_masuk_trans = $request->get('masuk');
+            $TransaksiModel->tanggal_keluar_trans = $request->get('keluar');
+            $TransaksiModel->ket_trans = $request->get('ket');
+            $TransaksiModel->total_trans = $request->get('total');
+            $TransaksiModel->jaminan_trans = $request->get('jaminan');
+            $TransaksiModel->save();
+            if ($TransaksiModel) {
+                return response()->json([
+                    'status' => 1,
+                    'data' => 'Success Update data'
+                ],201);
+            } else {
+                 return response()->json([
+                    'status' => 0,
+                    'data' => 'Failed Update'
+                ],201);
+            }
+
+        }
     }
 
     /**

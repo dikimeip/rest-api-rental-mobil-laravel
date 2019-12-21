@@ -15,18 +15,17 @@ class TransaksiController extends Controller
     public function index()
     {
         $data = TransaksiModel::all();
-        dd($data);
-        // if ($data) {
-        //     return response()->json([
-        //         'status' => 1,
-        //         'data' => $data
-        //     ],201);
-        // } else {
-        //      return response()->json([
-        //         'status' => 0,
-        //         'data' => 'Null'
-        //     ],404);
-        // }
+        if ($data) {
+            return response()->json([
+                'status' => 1,
+                'data' => $data
+            ],201);
+        } else {
+             return response()->json([
+                'status' => 0,
+                'data' => 'Null'
+            ],404);
+        }
     }
 
     /**

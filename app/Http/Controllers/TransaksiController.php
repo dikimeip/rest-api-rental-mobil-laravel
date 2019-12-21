@@ -138,8 +138,29 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->get('id');
+        $cari = TransaksiModel::find($id);
+        if ($id == "" || $cari == "") {
+            return response()->json([
+                'status' => 0,
+                'data' => 'Id Not Found'
+            ],404);
+        } else {
+            $TransaksiModel = TransaksiModel::find($id);
+            $TransaksiModel->delete();
+            if ($TransaksiModel) {
+                return response()->json([
+                    'status' => 1,
+                    'data' => 'Delete Ok'
+                ],201);
+            } else {
+                 return response()->json([
+                    'status' => 0,
+                    'data' => 'Delete Failed'
+                ],201);
+            }
+        }
     }
 }
